@@ -1,6 +1,10 @@
 import React, {useRef } from "react";
-import { useState } from "react";
+import { useContext,useEffect } from "react";
+import { FormContext } from "../context/FormContext";
 import { addData } from '../services/addData';
+import {updateData} from '../services/updateData'
+
+
 
 
 const url = 'http://localhost:3000/clientes';
@@ -8,7 +12,16 @@ const url = 'http://localhost:3000/clientes';
 
 export const Form = ({onSuccsess}) => {
     const input = useRef(null);
-    const [nameEdit, setNameEdit] = useState('');
+    const inputId = useRef(null);
+    const {form} = useContext(FormContext);
+     const formName = form?.name;
+    
+    useEffect(()=>{
+      input.current.value = form?.name ?? ''
+      inputId.current.value = form?.id ?? ''
+    },[form])
+
+    
     
 
     const handleClick = (e)=>{
@@ -17,32 +30,40 @@ export const Form = ({onSuccsess}) => {
               console.log('Not found');
               return
             }
-            addData(url,{name:input.current.value})
+            if(form.id !== null){
+              console.log(formName)
+                updateData(url,form.id,form.name)
+            }else{
+              addData(url,{name:input.current.value})
+            }
             if(onSuccsess)
                 onSuccsess();
         };
 
-        const handleName = (e)=>{
-          setNameEdit(
-           input.current.value
-          )
-        };
 
     
         return(
+          
             <form id="form">
                 <input
                 type="text"
                 placeholder="inserta un nombre"
                 className="name"
                 ref={input}
-                onChange={handleName}
                 required
+                />
+                <input
+                  type="text"
+                  placeholder="id"
+                  className="name"
+                  ref={inputId}
+                  required
                 />
                 <button className="btn" type="submit" onClick={handleClick}> 
                 Send
                 </button>
             </form>
+            
         ) 
             
       };
