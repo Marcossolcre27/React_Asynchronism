@@ -1,4 +1,4 @@
- async function updateData(url, clientId, newName){
+    async function updateData(url, {id}, newName){
 
     const putOptions = {
         method: 'PUT',
@@ -7,7 +7,7 @@
         },
         body: JSON.stringify(newName)
     };
-    const response = await fetch( `${url}/${clientId}`, putOptions );
+    const response = await fetch( `${url}/${id}`, putOptions );
 
     
     return response;

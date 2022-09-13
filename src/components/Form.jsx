@@ -14,8 +14,8 @@ export const Form = ({onSuccsess}) => {
     const input = useRef(null);
     const inputId = useRef(null);
     const {form} = useContext(FormContext);
-     const formName = form?.name;
-    
+     
+     
     useEffect(()=>{
       input.current.value = form?.name ?? ''
       inputId.current.value = form?.id ?? ''
@@ -25,16 +25,19 @@ export const Form = ({onSuccsess}) => {
     
 
     const handleClick = (e)=>{
+            const inputValue = input.current.value;
             e.preventDefault();
             if(input.current.value === ''){
               console.log('Not found');
               return
             }
             if(form.id !== null){
-              console.log(formName)
-                updateData(url,form.id,form.name)
+              
+              const formId = form?.id;
+              console.log(inputValue)
+                updateData(url,{id:formId},{name:inputValue})
             }else{
-              addData(url,{name:input.current.value})
+              addData(url,{name:inputValue})
             }
             if(onSuccsess)
                 onSuccsess();

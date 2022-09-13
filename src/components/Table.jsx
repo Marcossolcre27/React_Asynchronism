@@ -1,11 +1,7 @@
-import React, {useContext, useState} from "react";
-import { useEffect } from "react";
+import React, {useContext} from "react";
 import {ClientsContext} from '../context/ClientsContext';
-import { FormContext } from "../context/FormContext";
 import { Row } from "./Row";
-import {useForm} from 'react-hook-form';
-import { getData } from "../services/getData";
-const url = 'http://localhost:3000/clientes';
+
 
 
 
